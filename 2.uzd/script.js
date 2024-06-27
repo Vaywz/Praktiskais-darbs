@@ -17,7 +17,6 @@ const questions = [
       { text: "28", correct: false },
     ],
   },
-
   {
     question: "Kur atrodas garākais ūdenskritums Eiropā?",
     answers: [
@@ -27,7 +26,6 @@ const questions = [
       { text: "Lietuvā", correct: false },
     ],
   },
-
   {
     question: "Kurā ielā atrodas pie DOMINA?",
     answers: [
@@ -37,7 +35,6 @@ const questions = [
       { text: "Braslas ielā 16", correct: true },
     ],
   },
-
   {
     question: "Kurā gadā cilvēks pirmo reizi izkāpa uz Mēness?",
     answers: [
@@ -47,7 +44,6 @@ const questions = [
       { text: "1969", correct: true },
     ],
   },
-
   {
     question: "Kas ir izgudrojis telefonu?",
     answers: [
@@ -57,7 +53,6 @@ const questions = [
       { text: "Alberts Einšteins", correct: false },
     ],
   },
-
   {
     question: "Kas ir rakstījis grāmatu “Harijs Poters un Filozofu akmens”?",
     answers: [
@@ -67,7 +62,6 @@ const questions = [
       { text: "Stīvens Kings", correct: false },
     ],
   },
-
   {
     question: "Kura valsts rīko Olimpiskās spēles 2024. gadā?",
     answers: [
@@ -77,7 +71,6 @@ const questions = [
       { text: "ASV", correct: false },
     ],
   },
-
   {
     question: "Kurš ir augstākais ūdenskritums pasaulē?",
     answers: [
@@ -87,7 +80,6 @@ const questions = [
       { text: "Iguazu ūdenskritums", correct: false },
     ],
   },
-
   {
     question: "Kurā gadā Latvija kļuva par Eiropas Savienības dalībvalsti?",
     answers: [
@@ -97,7 +89,6 @@ const questions = [
       { text: "2014", correct: false },
     ],
   },
-
   {
     question: "Kurā gadā tika uzcelta Akropolis?",
     answers: [
@@ -162,12 +153,9 @@ nextButton.addEventListener("click", () => {
   if (answerIndex !== -1) {
     if (shuffledQuestions[currentQuestionIndex].answers[answerIndex].correct) {
       score++;
-    }
-    currentQuestionIndex++;
-    if (shuffledQuestions.length > currentQuestionIndex) {
-      setNextQuestion();
+      showFeedback(true);
     } else {
-      endQuiz();
+      showFeedback(false);
     }
   } else {
     alert("Lūdzu, atlasiet atbildi.");
@@ -175,6 +163,22 @@ nextButton.addEventListener("click", () => {
 });
 
 restartButton.addEventListener("click", startQuiz);
+
+function showFeedback(isCorrect) {
+  const feedback = document.createElement("div");
+  feedback.innerText = isCorrect ? "Pareizi!" : "Nepareizi!";
+  feedback.classList.add("feedback");
+  questionContainer.appendChild(feedback);
+  setTimeout(() => {
+    questionContainer.removeChild(feedback);
+    currentQuestionIndex++;
+    if (shuffledQuestions.length > currentQuestionIndex) {
+      setNextQuestion();
+    } else {
+      endQuiz();
+    }
+  }, 1000);
+}
 
 function endQuiz() {
   questionContainer.style.display = "none";
